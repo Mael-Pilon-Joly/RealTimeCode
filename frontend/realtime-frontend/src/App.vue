@@ -1,24 +1,15 @@
 <template>
+<Navbar/>
   <div>
-    <h1>{{ users }}</h1>
   </div>
 </template>
 
 <script>
+import Navbar from './components/NavbarView.vue'
+
 export default {
-  data() {
-    return {
-      users: "",
-    };
-
-  },
-  mounted() {
-
-     fetch("/users/")
-      .then((response) => response.text())
-      .then((data) => {
-        this.users = data;
-      });
+  components: {
+    Navbar
   },
 };
 

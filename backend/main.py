@@ -1,4 +1,3 @@
-
 from dotenv import dotenv_values
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -6,6 +5,8 @@ from controllers import dbcrud
 from database import models, schemas
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from fastapi.middleware.cors import CORSMiddleware
+
 secrets = dotenv_values(".env")
 engine = create_engine("mysql+pymysql://"+secrets["mysql_username"]+":"+secrets["mysql_password"]+"@localhost:3306/realtimecode", echo=True)
 
@@ -15,6 +16,18 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+
+origins = [
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 #Dependency
