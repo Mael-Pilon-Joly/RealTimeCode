@@ -1,10 +1,17 @@
 from pydantic import BaseModel,Field
-from typing import Optional
+from typing import Optional,Union
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Union[str, None] = None
 
 class UserBase(BaseModel):
     username: str
     password: str
-    email: str
 
 
 class User(UserBase):
@@ -13,7 +20,7 @@ class User(UserBase):
 
 
 class UserCreate(UserBase):
-    pass
+   email: str
 
 class UserResponse(User):
    pass
